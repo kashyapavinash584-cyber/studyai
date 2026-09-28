@@ -1,0 +1,2747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#6C5CE7">
+<title>StudyAI - Homework AI</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+body{
+  background:#f5f6ff;
+  color:#17172b;
+  min-height:100vh;
+}
+
+button,input,textarea,select{
+  font:inherit;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+.app{
+  width:100%;
+  max-width:520px;
+  min-height:100vh;
+  margin:auto;
+  background:#f8f8ff;
+  position:relative;
+  padding-bottom:85px;
+}
+
+/* HEADER */
+.header{
+  padding:24px 20px 18px;
+  background:linear-gradient(135deg,#6c5ce7,#8e7dff);
+  color:white;
+  border-radius:0 0 28px 28px;
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logoIcon{
+  width:43px;
+  height:43px;
+  background:rgba(255,255,255,.2);
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:23px;
+}
+
+.logo h1{
+  font-size:20px;
+}
+
+.logo p{
+  font-size:11px;
+  opacity:.8;
+}
+
+.themeBtn{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:rgba(255,255,255,.18);
+  color:#fff;
+  font-size:19px;
+}
+
+.greeting{
+  margin-top:25px;
+}
+
+.greeting h2{
+  font-size:25px;
+}
+
+.greeting p{
+  margin-top:5px;
+  opacity:.8;
+  font-size:13px;
+}
+
+/* CONTENT */
+.content{
+  padding:20px;
+}
+
+.sectionTitle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:13px;
+}
+
+.sectionTitle h3{
+  font-size:18px;
+}
+
+.sectionTitle span{
+  color:#6c5ce7;
+  font-size:12px;
+  cursor:pointer;
+}
+
+/* SEARCH */
+.search{
+  background:white;
+  border-radius:16px;
+  padding:13px 15px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  box-shadow:0 5px 20px rgba(50,40,100,.06);
+  margin-bottom:20px;
+}
+
+.search input{
+  border:0;
+  outline:0;
+  width:100%;
+  background:transparent;
+}
+
+/* QUICK */
+.quickGrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:25px;
+}
+
+.quick{
+  background:white;
+  border-radius:17px;
+  padding:14px 5px;
+  text-align:center;
+  box-shadow:0 5px 18px rgba(50,40,100,.05);
+  transition:.2s;
+}
+
+.quick:active{
+  transform:scale(.95);
+}
+
+.quickIcon{
+  width:42px;
+  height:42px;
+  margin:auto auto 8px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
+
+.quick b{
+  display:block;
+  font-size:11px;
+}
+
+/* SOLVER CARD */
+.solverCard{
+  background:linear-gradient(135deg,#17172b,#2e2a53);
+  color:white;
+  border-radius:23px;
+  padding:20px;
+  margin-bottom:25px;
+  box-shadow:0 12px 30px rgba(35,30,80,.2);
+}
+
+.solverCard h3{
+  font-size:19px;
+}
+
+.solverCard p{
+  color:#c9c6dd;
+  font-size:12px;
+  margin:6px 0 15px;
+}
+
+.solveBtn{
+  width:100%;
+  padding:14px;
+  background:#8e7dff;
+  color:white;
+  border-radius:14px;
+  font-weight:700;
+}
+
+/* SUBJECTS */
+.subjects{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.subject{
+  background:white;
+  padding:15px;
+  border-radius:18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow:0 5px 18px rgba(50,40,100,.05);
+}
+
+.subjectIcon{
+  width:43px;
+  height:43px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
+
+.subject b{
+  font-size:13px;
+}
+
+.subject small{
+  display:block;
+  color:#8c8b99;
+  font-size:10px;
+  margin-top:3px;
+}
+
+/* BOTTOM NAV */
+.bottomNav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:520px;
+  height:72px;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(15px);
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border-top:1px solid #ececf5;
+  z-index:50;
+}
+
+.navItem{
+  color:#9897a7;
+  text-align:center;
+  font-size:10px;
+  background:none;
+}
+
+.navItem div{
+  font-size:20px;
+  margin-bottom:3px;
+}
+
+.navItem.active{
+  color:#6c5ce7;
+  font-weight:700;
+}
+
+/* PAGES */
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* SOLVER PAGE */
+.pageHeader{
+  padding:22px 20px 5px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.back{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  background:white;
+  font-size:19px;
+}
+
+.pageHeader h2{
+  font-size:21px;
+}
+
+.solverBox{
+  margin:20px;
+  background:white;
+  border-radius:22px;
+  padding:17px;
+  box-shadow:0 5px 25px rgba(50,40,100,.06);
+}
+
+.label{
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:8px;
+  display:block;
+}
+
+.select{
+  width:100%;
+  padding:13px;
+  border:1px solid #e8e7f2;
+  border-radius:13px;
+  outline:0;
+  margin-bottom:15px;
+  background:#fafaff;
+}
+
+.question{
+  width:100%;
+  height:150px;
+  resize:none;
+  border:1px solid #e8e7f2;
+  border-radius:14px;
+  padding:14px;
+  outline:0;
+  background:#fafaff;
+  margin-bottom:12px;
+}
+
+.mainBtn{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  color:white;
+  background:linear-gradient(135deg,#6c5ce7,#8e7dff);
+  font-weight:700;
+}
+
+.answer{
+  display:none;
+  margin:0 20px 20px;
+  background:white;
+  border-radius:20px;
+  padding:18px;
+  box-shadow:0 5px 25px rgba(50,40,100,.06);
+}
+
+.answer.show{
+  display:block;
+}
+
+.answer h3{
+  margin-bottom:10px;
+  color:#6c5ce7;
+}
+
+.answerText{
+  line-height:1.65;
+  font-size:14px;
+  white-space:pre-wrap;
+}
+
+/* NOTES */
+.noteForm{
+  margin:20px;
+}
+
+.noteInput{
+  width:100%;
+  border:0;
+  outline:0;
+  background:white;
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:10px;
+}
+
+.notesList{
+  padding:0 20px;
+}
+
+.note{
+  background:white;
+  padding:16px;
+  border-radius:17px;
+  margin-bottom:10px;
+  box-shadow:0 4px 15px rgba(50,40,100,.05);
+}
+
+.noteTitle{
+  font-weight:700;
+  margin-bottom:5px;
+}
+
+.noteDate{
+  font-size:10px;
+  color:#999;
+}
+
+/* QUIZ */
+.quizBox{
+  margin:20px;
+  background:white;
+  border-radius:22px;
+  padding:20px;
+}
+
+.quizQuestion{
+  font-size:17px;
+  font-weight:700;
+  line-height:1.5;
+  margin-bottom:15px;
+}
+
+.option{
+  width:100%;
+  padding:13px;
+  background:#f6f5ff;
+  border-radius:13px;
+  text-align:left;
+  margin-bottom:9px;
+}
+
+.option.correct{
+  background:#dff8e8;
+}
+
+.option.wrong{
+  background:#ffe1e1;
+}
+
+.score{
+  text-align:center;
+  font-size:20px;
+  font-weight:800;
+  margin-top:15px;
+}
+
+/* HISTORY */
+.history{
+  padding:20px;
+}
+
+.historyItem{
+  background:white;
+  padding:15px;
+  border-radius:16px;
+  margin-bottom:10px;
+}
+
+.historyItem b{
+  font-size:13px;
+}
+
+.historyItem p{
+  font-size:11px;
+  color:#777;
+  margin-top:4px;
+}
+
+/* DARK */
+body.dark{
+  background:#11111d;
+  color:#f5f5ff;
+}
+
+body.dark .app{
+  background:#11111d;
+}
+
+body.dark .search,
+body.dark .quick,
+body.dark .subject,
+body.dark .solverBox,
+body.dark .answer,
+body.dark .note,
+body.dark .quizBox,
+body.dark .historyItem,
+body.dark .back,
+body.dark .bottomNav{
+  background:#1b1b2b;
+  color:#fff;
+}
+
+body.dark .search input,
+body.dark .noteInput,
+body.dark .question,
+body.dark .select{
+  color:white;
+  background:#222237;
+}
+
+body.dark .bottomNav{
+  border-color:#29293c;
+}
+
+/* EMPTY */
+.empty{
+  text-align:center;
+  color:#999;
+  padding:30px 10px;
+  font-size:13px;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:90px;
+  transform:translateX(-50%) translateY(20px);
+  background:#202033;
+  color:white;
+  padding:11px 17px;
+  border-radius:12px;
+  font-size:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+  z-index:100;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- HOME -->
+<section id="home" class="page active">
+
+<header class="header">
+  <div class="top">
+    <div class="logo">
+      <div class="logoIcon">🎓</div>
+      <div>
+        <h1>StudyAI</h1>
+        <p>Smart Learning Assistant</p>
+      </div>
+    </div>
+
+    <button class="themeBtn" onclick="toggleTheme()">🌙</button>
+  </div>
+
+  <div class="greeting">
+    <h2>Hello, Student 👋</h2>
+    <p>Let's make your study easier today.</p>
+  </div>
+</header>
+
+<div class="content">
+
+  <div class="search">
+    🔍
+    <input id="searchInput" placeholder="Search subject or topic..." oninput="searchSubjects()">
+  </div>
+
+  <div class="sectionTitle">
+    <h3>Quick Tools</h3>
+  </div>
+
+  <div class="quickGrid">
+
+    <button class="quick" onclick="openPage('solver')">
+      <div class="quickIcon" style="background:#eeeaff">🤖</div>
+      <b>AI Solver</b>
+    </button>
+
+    <button class="quick" onclick="openPage('notes')">
+      <div class="quickIcon" style="background:#fff2dc">📝</div>
+      <b>Notes</b>
+    </button>
+
+    <button class="quick" onclick="openPage('quiz')">
+      <div class="quickIcon" style="background:#e2f9ed">🧠</div>
+      <b>Quiz</b>
+    </button>
+
+    <button class="quick" onclick="showToast('Coming soon: AI Flashcards')">
+      <div class="quickIcon" style="background:#e5f1ff">📚</div>
+      <b>Flashcards</b>
+    </button>
+
+  </div>
+
+  <div class="solverCard">
+    <h3>🤖 Homework AI</h3>
+    <p>Ask a question and get a step-by-step explanation.</p>
+    <button class="solveBtn" onclick="openPage('solver')">
+      Start Solving →
+    </button>
+  </div>
+
+  <div class="sectionTitle">
+    <h3>Subjects</h3>
+    <span onclick="showToast('All subjects loaded')">View all</span>
+  </div>
+
+  <div class="subjects" id="subjects">
+
+    <button class="subject" data-name="Mathematics" onclick="subjectSolve('Mathematics')">
+      <div class="subjectIcon" style="background:#eeeaff">➗</div>
+      <div><b>Mathematics</b><small>Numbers & formulas</small></div>
+    </button>
+
+    <button class="subject" data-name="Science" onclick="subjectSolve('Science')">
+      <div class="subjectIcon" style="background:#e3f8ed">🔬</div>
+      <div><b>Science</b><small>Explore & discover</small></div>
+    </button>
+
+    <button class="subject" data-name="English" onclick="subjectSolve('English')">
+      <div class="subjectIcon" style="background:#e8f1ff">🔤</div>
+      <div><b>English</b><small>Grammar & writing</small></div>
+    </button>
+
+    <button class="subject" data-name="History" onclick="subjectSolve('History')">
+      <div class="subjectIcon" style="background:#fff0df">🏛️</div>
+      <div><b>History</b><small>Past & civilizations</small></div>
+    </button>
+
+  </div>
+
+</div>
+</section>
+
+
+<!-- SOLVER -->
+<section id="solver" class="page">
+
+  <div class="pageHeader">
+    <button class="back" onclick="openPage('home')">←</button>
+    <h2>Homework AI</h2>
+  </div>
+
+  <div class="solverBox">
+
+    <label class="label">Select Subject</label>
+
+    <select id="subjectSelect" class="select">
+      <option>Mathematics</option>
+      <option>Science</option>
+      <option>English</option>
+      <option>History</option>
+      <option>General</option>
+    </select>
+
+    <label class="label">Your Question</label>
+
+    <textarea
+      id="question"
+      class="question"
+      placeholder="Example: What is 25 × 12? Explain step by step..."
+    ></textarea>
+
+    <button class="mainBtn" onclick="solveQuestion()">
+      ✨ Solve with StudyAI
+    </button>
+
+  </div>
+
+  <div id="answer" class="answer">
+    <h3>💡 Explanation</h3>
+    <div id="answerText" class="answerText"></div>
+  </div>
+
+</section>
+
+
+<!-- NOTES -->
+<section id="notes" class="page">
+
+  <div class="pageHeader">
+    <button class="back" onclick="openPage('home')">←</button>
+    <h2>My Notes</h2>
+  </div>
+
+  <div class="noteForm">
+    <input id="noteTitle" class="noteInput" placeholder="Note title">
+    <textarea id="noteBody" class="noteInput" rows="5" placeholder="Write your study note..."></textarea>
+    <button class="mainBtn" onclick="saveNote()">💾 Save Note</button>
+  </div>
+
+  <div class="notesList" id="notesList"></div>
+
+</section>
+
+
+<!-- QUIZ -->
+<section id="quiz" class="page">
+
+  <div class="pageHeader">
+    <button class="back" onclick="openPage('home')">←</button>
+    <h2>Daily Quiz</h2>
+  </div>
+
+  <div class="quizBox">
+
+    <div id="quizQuestion" class="quizQuestion"></div>
+    <div id="options"></div>
+    <div id="score" class="score"></div>
+
+  </div>
+
+</section>
+
+
+<!-- HISTORY -->
+<section id="history" class="page">
+
+  <div class="pageHeader">
+    <button class="back" onclick="openPage('home')">←</button>
+    <h2>Study History</h2>
+  </div>
+
+  <div class="history" id="historyList"></div>
+
+</section>
+
+
+<!-- NAVIGATION -->
+<nav class="bottomNav">
+
+  <button class="navItem active" data-page="home" onclick="openPage('home')">
+    <div>⌂</div>
+    Home
+  </button>
+
+  <button class="navItem" data-page="solver" onclick="openPage('solver')">
+    <div>🤖</div>
+    AI Solver
+  </button>
+
+  <button class="navItem" data-page="notes" onclick="openPage('notes')">
+    <div>📝</div>
+    Notes
+  </button>
+
+  <button class="navItem" data-page="quiz" onclick="openPage('quiz')">
+    <div>🧠</div>
+    Quiz
+  </button>
+
+  <button class="navItem" data-page="history" onclick="openPage('history')">
+    <div>🕘</div>
+    History
+  </button>
+
+</nav>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+
+<script>
+
+/* PAGE SYSTEM */
+
+function openPage(page){
+
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.remove("active");
+  });
+
+  const target=document.getElementById(page);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+  document.querySelectorAll(".navItem").forEach(n=>{
+    n.classList.toggle(
+      "active",
+      n.dataset.page===page
+    );
+  });
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+  if(page==="notes") loadNotes();
+  if(page==="history") loadHistory();
+  if(page==="quiz") startQuiz();
+}
+
+
+/* TOAST */
+
+function showToast(message){
+
+  const toast=document.getElementById("toast");
+
+  toast.textContent=message;
+  toast.classList.add("show");
+
+  setTimeout(()=>{
+    toast.classList.remove("show");
+  },2200);
+}
+
+
+/* DARK MODE */
+
+function toggleTheme(){
+
+  document.body.classList.toggle("dark");
+
+  const dark=document.body.classList.contains("dark");
+
+  localStorage.setItem("studyai_dark",dark);
+
+  document.querySelector(".themeBtn").textContent=
+    dark ? "☀️" : "🌙";
+}
+
+if(localStorage.getItem("studyai_dark")==="true"){
+  document.body.classList.add("dark");
+  document.querySelector(".themeBtn").textContent="☀️";
+}
+
+
+/* SUBJECT SEARCH */
+
+function searchSubjects(){
+
+  const value=
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase();
+
+  document.querySelectorAll(".subject").forEach(item=>{
+
+    const name=item.dataset.name.toLowerCase();
+
+    item.style.display=
+      name.includes(value) ? "flex" : "none";
+
+  });
+}
+
+
+/* SUBJECT OPEN */
+
+function subjectSolve(subject){
+
+  openPage("solver");
+
+  document.getElementById("subjectSelect").value=subject;
+
+  document.getElementById("question").focus();
+}
+
+
+/* HOMEWORK SOLVER */
+
+function solveQuestion(){
+
+  const question=
+    document.getElementById("question").value.trim();
+
+  const subject=
+    document.getElementById("subjectSelect").value;
+
+  const answer=
+    document.getElementById("answer");
+
+  const answerText=
+    document.getElementById("answerText");
+
+  if(!question){
+
+    showToast("Please enter your question");
+
+    document.getElementById("question").focus();
+
+    return;
+  }
+
+  answer.classList.add("show");
+
+  answerText.textContent="Thinking...";
+
+  setTimeout(()=>{
+
+    const result=generateAnswer(question,subject);
+
+    answerText.textContent=result;
+
+    saveHistory(question,subject,result);
+
+  },700);
+}
+
+
+/*
+  DEMO LOCAL SOLVER
+  This works without an API.
+*/
+
+function generateAnswer(q,subject){
+
+  const lower=q.toLowerCase();
+
+  /* Basic arithmetic */
+
+  const arithmetic=
+    lower.match(
+      /^\s*(\d+(?:\.\d+)?)\s*([+\-*x×÷\/])\s*(\d+(?:\.\d+)?)\s*\??\s*$/
+    );
+
+  if(arithmetic){
+
+    const a=parseFloat(arithmetic[1]);
+    const op=arithmetic[2];
+    const b=parseFloat(arithmetic[3]);
+
+    let result;
+
+    if(op==="+") result=a+b;
+    else if(op==="-") result=a-b;
+    else if(op==="*" || op==="x" || op==="×") result=a*b;
+    else if(op==="/" || op==="÷"){
+      if(b===0) return "Division by zero is not defined.";
+      result=a/b;
+    }
+
+    return `Question: ${q}
+
+Step 1:
+Identify the two numbers: ${a} and ${b}.
+
+Step 2:
+Apply the ${operatorName(op)} operation.
+
+Step 3:
+${a} ${op} ${b} = ${result}
+
+Final Answer:
+${result}
+
+This is a step-by-step solution generated locally by StudyAI.`;
+  }
+
+
+  if(
+    lower.includes("capital of india") ||
+    lower.includes("bharat ki rajdhani")
+  ){
+
+    return `Question: ${q}
+
+Answer:
+भारत की राजधानी नई दिल्ली है.
+
+Explanation:
+नई दिल्ली भारत की राष्ट्रीय राजधानी है और केंद्र सरकार के प्रमुख संस्थानों का मुख्य स्थान है.`;
+  }
+
+
+  if(
+    lower.includes("photosynthesis") ||
+    lower.includes("प्रकाश संश्लेषण")
+  ){
+
+    return `Photosynthesis यानी प्रकाश संश्लेषण वह प्रक्रिया है जिसमें हरे पौधे सूर्य के प्रकाश की सहायता से कार्बन डाइऑक्साइड और पानी से अपना भोजन बनाते हैं.
+
+सरल रूप में:
+
+Carbon dioxide + Water + Sunlight
+→ Glucose + Oxygen
+
+इस प्रक्रिया में chlorophyll महत्वपूर्ण भूमिका निभाता है.`;
+  }
+
+
+  if(
+    lower.includes("water") &&
+    (lower.includes("boil") || lower.includes("boiling"))
+  ){
+
+    return `पानी सामान्य वायुमंडलीय दबाव पर लगभग 100°C पर उबलता है.
+
+ध्यान दें:
+ऊंचाई और वायुमंडलीय दबाव बदलने पर boiling point भी बदल सकता है.`;
+  }
+
+
+  if(
+    lower.includes("hello") ||
+    lower.includes("hi")
+  ){
+
+    return `Hello! 👋
+
+मैं StudyAI हूँ.
+
+आप मुझसे Mathematics, Science, English, History और सामान्य पढ़ाई से जुड़े सवाल पूछ सकते हैं.`;
+  }
+
+
+  return `आपका सवाल मिला:
+
+"${q}"
+
+Subject: ${subject}
+
+इस offline version में basic questions और कुछ common study topics का local solver उपलब्ध है.
+
+AI की पूरी क्षमता के लिए इस app में किसी वास्तविक AI API/backend को connect करना होगा.
+
+आप उदाहरण के लिए ये सवाल पूछ सकते हैं:
+
+• 25 × 12
+• 100 / 4
+• What is photosynthesis?
+• What is the capital of India?
+• Water boiling point क्या है?
+
+मैं सवाल को step-by-step समझाने के लिए तैयार हूँ.`;
+}
+
+
+function operatorName(op){
+
+  if(op==="+") return "addition";
+  if(op==="-") return "subtraction";
+  if(op==="*" || op==="x" || op==="×") return "multiplication";
+  if(op==="/" || op==="÷") return "division";
+
+  return "mathematical";
+}
+
+
+/* NOTES */
+
+function saveNote(){
+
+  const title=
+    document.getElementById("noteTitle").value.trim();
+
+  const body=
+    document.getElementById("noteBody").value.trim();
+
+  if(!title || !body){
+
+    showToast("Title और note दोनों भरें");
+
+    return;
+  }
+
+  const notes=
+    JSON.parse(
+      localStorage.getItem("studyai_notes") || "[]"
+    );
+
+  notes.unshift({
+    title:title,
+    body:body,
+    date:new Date().toLocaleString()
+  });
+
+  localStorage.setItem(
+    "studyai_notes",
+    JSON.stringify(notes)
+  );
+
+  document.getElementById("noteTitle").value="";
+  document.getElementById("noteBody").value="";
+
+  loadNotes();
+
+  showToast("Note saved successfully");
+}
+
+
+function loadNotes(){
+
+  const list=
+    document.getElementById("notesList");
+
+  const notes=
+    JSON.parse(
+      localStorage.getItem("studyai_notes") || "[]"
+    );
+
+  if(!notes.length){
+
+    list.innerHTML=
+      `<div class="empty">📝<br><br>No notes yet.<br>Create your first study note.</div>`;
+
+    return;
+  }
+
+  list.innerHTML=notes.map((note,index)=>`
+
+    <div class="note">
+
+      <div class="noteTitle">
+        ${escapeHTML(note.title)}
+      </div>
+
+      <div style="font-size:13px;line-height:1.5">
+        ${escapeHTML(note.body)}
+      </div>
+
+      <div class="noteDate">
+        ${escapeHTML(note.date)}
+      </div>
+
+      <button
+        onclick="deleteNote(${index})"
+        style="margin-top:10px;color:#e74c3c;background:none;font-size:11px">
+        Delete
+      </button>
+
+    </div>
+
+  `).join("");
+}
+
+
+function deleteNote(index){
+
+  const notes=
+    JSON.parse(
+      localStorage.getItem("studyai_notes") || "[]"
+    );
+
+  notes.splice(index,1);
+
+  localStorage.setItem(
+    "studyai_notes",
+    JSON.stringify(notes)
+  );
+
+  loadNotes();
+
+  showToast("Note deleted");
+}
+
+
+/* HISTORY */
+
+function saveHistory(question,subject,answer){
+
+  const history=
+    JSON.parse(
+      localStorage.getItem("studyai_history") || "[]"
+    );
+
+  history.unshift({
+    question,
+    subject,
+    answer,
+    date:new Date().toLocaleString()
+  });
+
+  localStorage.setItem(
+    "studyai_history",
+    JSON.stringify(history.slice(0,30))
+  );
+}
+
+
+function loadHistory(){
+
+  const list=
+    document.getElementById("historyList");
+
+  const history=
+    JSON.parse(
+      localStorage.getItem("studyai_history") || "[]"
+    );
+
+  if(!history.length){
+
+    list.innerHTML=
+      `<div class="empty">🕘<br><br>No study history yet.</div>`;
+
+    return;
+  }
+
+  list.innerHTML=history.map(item=>`
+
+    <div class="historyItem">
+
+      <b>${escapeHTML(item.subject)}</b>
+
+      <p>${escapeHTML(item.question)}</p>
+
+      <small style="color:#999">
+        ${escapeHTML(item.date)}
+      </small>
+
+    </div>
+
+  `).join("");
+}
+
+
+/* QUIZ */
+
+const quizData=[
+
+  {
+    q:"What is 12 × 5?",
+    options:["50","60","70","55"],
+    answer:1
+  },
+
+  {
+    q:"भारत की राजधानी क्या है?",
+    options:["Mumbai","Kolkata","New Delhi","Chennai"],
+    answer:2
+  },
+
+  {
+    q:"Plants prepare food by which process?",
+    options:["Respiration","Photosynthesis","Digestion","Evaporation"],
+    answer:1
+  },
+
+  {
+    q:"How many days are there in a week?",
+    options:["5","6","7","8"],
+    answer:2
+  }
+
+];
+
+let currentQuiz=0;
+let quizScore=0;
+let quizAnswered=false;
+
+function startQuiz(){
+
+  currentQuiz=0;
+  quizScore=0;
+  quizAnswered=false;
+
+  showQuizQuestion();
+}
+
+
+function showQuizQuestion(){
+
+  if(currentQuiz>=quizData.length){
+
+    document.getElementById("quizQuestion").textContent=
+      "🎉 Quiz Completed!";
+
+    document.getElementById("options").innerHTML="";
+
+    document.getElementById("score").textContent=
+      `Your Score: ${quizScore}/${quizData.length}`;
+
+    return;
+  }
+
+  const q=quizData[currentQuiz];
+
+  document.getElementById("quizQuestion").textContent=
+    `${currentQuiz+1}. ${q.q}`;
+
+  document.getElementById("score").textContent="";
+
+  quizAnswered=false;
+
+  document.getElementById("options").innerHTML=
+    q.options.map((option,index)=>`
+
+      <button
+        class="option"
+        onclick="answerQuiz(${index})">
+        ${escapeHTML(option)}
+      </button>
+
+    `).join("");
+}
+
+
+function answerQuiz(index){
+
+  if(quizAnswered) return;
+
+  quizAnswered=true;
+
+  const q=quizData[currentQuiz];
+
+  const buttons=
+    document.querySelectorAll(".option");
+
+  buttons.forEach((btn,i)=>{
+
+    if(i===q.answer){
+      btn.classList.add("correct");
+    }
+
+    if(i===index && index!==q.answer){
+      btn.classList.add("wrong");
+    }
+
+  });
+
+  if(index===q.answer){
+
+    quizScore++;
+
+    showToast("Correct! 🎉");
+
+  }else{
+
+    showToast("Try again next time!");
+
+  }
+
+  setTimeout(()=>{
+
+    currentQuiz++;
+
+    showQuizQuestion();
+
+  },900);
+}
+
+
+/* SECURITY */
+
+function escapeHTML(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+
+/* INITIAL */
+
+loadNotes();
+
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#6C5CE7">
+<title>StudyAI - Homework AI</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+body{
+  background:#f5f6ff;
+  color:#17172b;
+  min-height:100vh;
+}
+
+button,input,textarea,select{
+  font:inherit;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+.app{
+  width:100%;
+  max-width:520px;
+  min-height:100vh;
+  margin:auto;
+  background:#f8f8ff;
+  position:relative;
+  padding-bottom:85px;
+}
+
+/* HEADER */
+.header{
+  padding:24px 20px 18px;
+  background:linear-gradient(135deg,#6c5ce7,#8e7dff);
+  color:white;
+  border-radius:0 0 28px 28px;
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logoIcon{
+  width:43px;
+  height:43px;
+  background:rgba(255,255,255,.2);
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:23px;
+}
+
+.logo h1{
+  font-size:20px;
+}
+
+.logo p{
+  font-size:11px;
+  opacity:.8;
+}
+
+.themeBtn{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:rgba(255,255,255,.18);
+  color:#fff;
+  font-size:19px;
+}
+
+.greeting{
+  margin-top:25px;
+}
+
+.greeting h2{
+  font-size:25px;
+}
+
+.greeting p{
+  margin-top:5px;
+  opacity:.8;
+  font-size:13px;
+}
+
+/* CONTENT */
+.content{
+  padding:20px;
+}
+
+.sectionTitle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:13px;
+}
+
+.sectionTitle h3{
+  font-size:18px;
+}
+
+.sectionTitle span{
+  color:#6c5ce7;
+  font-size:12px;
+  cursor:pointer;
+}
+
+/* SEARCH */
+.search{
+  background:white;
+  border-radius:16px;
+  padding:13px 15px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  box-shadow:0 5px 20px rgba(50,40,100,.06);
+  margin-bottom:20px;
+}
+
+.search input{
+  border:0;
+  outline:0;
+  width:100%;
+  background:transparent;
+}
+
+/* QUICK */
+.quickGrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:25px;
+}
+
+.quick{
+  background:white;
+  border-radius:17px;
+  padding:14px 5px;
+  text-align:center;
+  box-shadow:0 5px 18px rgba(50,40,100,.05);
+  transition:.2s;
+}
+
+.quick:active{
+  transform:scale(.95);
+}
+
+.quickIcon{
+  width:42px;
+  height:42px;
+  margin:auto auto 8px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
+
+.quick b{
+  display:block;
+  font-size:11px;
+}
+
+/* SOLVER CARD */
+.solverCard{
+  background:linear-gradient(135deg,#17172b,#2e2a53);
+  color:white;
+  border-radius:23px;
+  padding:20px;
+  margin-bottom:25px;
+  box-shadow:0 12px 30px rgba(35,30,80,.2);
+}
+
+.solverCard h3{
+  font-size:19px;
+}
+
+.solverCard p{
+  color:#c9c6dd;
+  font-size:12px;
+  margin:6px 0 15px;
+}
+
+.solveBtn{
+  width:100%;
+  padding:14px;
+  background:#8e7dff;
+  color:white;
+  border-radius:14px;
+  font-weight:700;
+}
+
+/* SUBJECTS */
+.subjects{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.subject{
+  background:white;
+  padding:15px;
+  border-radius:18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow:0 5px 18px rgba(50,40,100,.05);
+}
+
+.subjectIcon{
+  width:43px;
+  height:43px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
+
+.subject b{
+  font-size:13px;
+}
+
+.subject small{
+  display:block;
+  color:#8c8b99;
+  font-size:10px;
+  margin-top:3px;
+}
+
+/* BOTTOM NAV */
+.bottomNav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:520px;
+  height:72px;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(15px);
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border-top:1px solid #ececf5;
+  z-index:50;
+}
+
+.navItem{
+  color:#9897a7;
+  text-align:center;
+  font-size:10px;
+  background:none;
+}
+
+.navItem div{
+  font-size:20px;
+  margin-bottom:3px;
+}
+
+.navItem.active{
+  color:#6c5ce7;
+  font-weight:700;
+}
+
+/* PAGES */
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* SOLVER PAGE */
+.pageHeader{
+  padding:22px 20px 5px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.back{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  background:white;
+  font-size:19px;
+}
+
+.pageHeader h2{
+  font-size:21px;
+}
+
+.solverBox{
+  margin:20px;
+  background:white;
+  border-radius:22px;
+  padding:17px;
+  box-shadow:0 5px 25px rgba(50,40,100,.06);
+}
+
+.label{
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:8px;
+  display:block;
+}
+
+.select{
+  width:100%;
+  padding:13px;
+  border:1px solid #e8e7f2;
+  border-radius:13px;
+  outline:0;
+  margin-bottom:15px;
+  background:#fafaff;
+}
+
+.question{
+  width:100%;
+  height:150px;
+  resize:none;
+  border:1px solid #e8e7f2;
+  border-radius:14px;
+  padding:14px;
+  outline:0;
+  background:#fafaff;
+  margin-bottom:12px;
+}
+
+.mainBtn{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  color:white;
+  background:linear-gradient(135deg,#6c5ce7,#8e7dff);
+  font-weight:700;
+}
+
+.answer{
+  display:none;
+  margin:0 20px 20px;
+  background:white;
+  border-radius:20px;
+  padding:18px;
+  box-shadow:0 5px 25px rgba(50,40,100,.06);
+}
+
+.answer.show{
+  display:block;
+}
+
+.answer h3{
+  margin-bottom:10px;
+  color:#6c5ce7;
+}
+
+.answerText{
+  line-height:1.65;
+  font-size:14px;
+  white-space:pre-wrap;
+}
+
+/* NOTES */
+.noteForm{
+  margin:20px;
+}
+
+.noteInput{
+  width:100%;
+  border:0;
+  outline:0;
+  background:white;
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:10px;
+}
+
+.notesList{
+  padding:0 20px;
+}
+
+.note{
+  background:white;
+  padding:16px;
+  border-radius:17px;
+  margin-bottom:10px;
+  box-shadow:0 4px 15px rgba(50,40,100,.05);
+}
+
+.noteTitle{
+  font-weight:700;
+  margin-bottom:5px;
+}
+
+.noteDate{
+  font-size:10px;
+  color:#999;
+}
+
+/* QUIZ */
+.quizBox{
+  margin:20px;
+  background:white;
+  border-radius:22px;
+  padding:20px;
+}
+
+.quizQuestion{
+  font-size:17px;
+  font-weight:700;
+  line-height:1.5;
+  margin-bottom:15px;
+}
+
+.option{
+  width:100%;
+  padding:13px;
+  background:#f6f5ff;
+  border-radius:13px;
+  text-align:left;
+  margin-bottom:9px;
+}
+
+.option.correct{
+  background:#dff8e8;
+}
+
+.option.wrong{
+  background:#ffe1e1;
+}
+
+.score{
+  text-align:center;
+  font-size:20px;
+  font-weight:800;
+  margin-top:15px;
+}
+
+/* HISTORY */
+.history{
+  padding:20px;
+}
+
+.historyItem{
+  background:white;
+  padding:15px;
+  border-radius:16px;
+  margin-bottom:10px;
+}
+
+.historyItem b{
+  font-size:13px;
+}
+
+.historyItem p{
+  font-size:11px;
+  color:#777;
+  margin-top:4px;
+}
+
+/* DARK */
+body.dark{
+  background:#11111d;
+  color:#f5f5ff;
+}
+
+body.dark .app{
+  background:#11111d;
+}
+
+body.dark .search,
+body.dark .quick,
+body.dark .subject,
+body.dark .solverBox,
+body.dark .answer,
+body.dark .note,
+body.dark .quizBox,
+body.dark .historyItem,
+body.dark .back,
+body.dark .bottomNav{
+  background:#1b1b2b;
+  color:#fff;
+}
+
+body.dark .search input,
+body.dark .noteInput,
+body.dark .question,
+body.dark .select{
+  color:white;
+  background:#222237;
+}
+
+body.dark .bottomNav{
+  border-color:#29293c;
+}
+
+/* EMPTY */
+.empty{
+  text-align:center;
+  color:#999;
+  padding:30px 10px;
+  font-size:13px;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:90px;
+  transform:translateX(-50%) translateY(20px);
+  background:#202033;
+  color:white;
+  padding:11px 17px;
+  border-radius:12px;
+  font-size:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+  z-index:100;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- HOME -->
+<section id="home" class="page active">
+
+<header class="header">
+  <div class="top">
+    <div class="logo">
+      <div class="logoIcon">🎓</div>
+      <div>
+        <h1>StudyAI</h1>
+        <p>Smart Learning Assistant</p>
+      </div>
+    </div>
+
+    <button class="themeBtn" onclick="toggleTheme()">🌙</button>
+  </div>
+
+  <div class="greeting">
+    <h2>Hello, Student 👋</h2>
+    <p>Let's make your study easier today.</p>
+  </div>
+</header>
+
+<div class="content">
+
+  <div class="search">
+    🔍
+    <input id="searchInput" placeholder="Search subject or topic..." oninput="searchSubjects()">
+  </div>
+
+  <div class="sectionTitle">
+    <h3>Quick Tools</h3>
+  </div>
+
+  <div class="quickGrid">
+
+    <button class="quick" onclick="openPage('solver')">
+      <div class="quickIcon" style="background:#eeeaff">🤖</div>
+      <b>AI Solver</b>
+    </button>
+
+    <button class="quick" onclick="openPage('notes')">
+      <div class="quickIcon" style="background:#fff2dc">📝</div>
+      <b>Notes</b>
+    </button>
+
+    <button class="quick" onclick="openPage('quiz')">
+      <div class="quickIcon" style="background:#e2f9ed">🧠</div>
+      <b>Quiz</b>
+    </button>
+
+    <button class="quick" onclick="showToast('Coming soon: AI Flashcards')">
+      <div class="quickIcon" style="background:#e5f1ff">📚</div>
+      <b>Flashcards</b>
+    </button>
+
+  </div>
+
+  <div class="solverCard">
+    <h3>🤖 Homework AI</h3>
+    <p>Ask a question and get a step-by-step explanation.</p>
+    <button class="solveBtn" onclick="openPage('solver')">
+      Start Solving →
+    </button>
+  </div>
+
+  <div class="sectionTitle">
+    <h3>Subjects</h3>
+    <span onclick="showToast('All subjects loaded')">View all</span>
+  </div>
+
+  <div class="subjects" id="subjects">
+
+    <button class="subject" data-name="Mathematics" onclick="subjectSolve('Mathematics')">
+      <div class="subjectIcon" style="background:#eeeaff">➗</div>
+      <div><b>Mathematics</b><small>Numbers & formulas</small></div>
+    </button>
+
+    <button class="subject" data-name="Science" onclick="subjectSolve('Science')">
+      <div class="subjectIcon" style="background:#e3f8ed">🔬</div>
+      <div><b>Science</b><small>Explore & discover</small></div>
+    </button>
+
+    <button class="subject" data-name="English" onclick="subjectSolve('English')">
+      <div class="subjectIcon" style="background:#e8f1ff">🔤</div>
+      <div><b>English</b><small>Grammar & writing</small></div>
+    </button>
+
+    <button class="subject" data-name="History" onclick="subjectSolve('History')">
+      <div class="subjectIcon" style="background:#fff0df">🏛️</div>
+      <div><b>History</b><small>Past & civilizations</small></div>
+    </button>
+
+  </div>
+
+</div>
+</section>
+
+
+<!-- SOLVER -->
+<section id="solver" class="page">
+
+  <div class="pageHeader">
+    <button class="back" onclick="openPage('home')">←</button>
+    <h2>Homework AI</h2>
+  </div>
+
+  <div class="solverBox">
+
+    <label class="label">Select Subject</label>
+
+    <select id="subjectSelect" class="select">
+      <option>Mathematics</option>
+      <option>Science</option>
+      <option>English</option>
+      <option>History</option>
+      <option>General</option>
+    </select>
+
+    <label class="label">Your Question</label>
+
+    <textarea
+      id="question"
+      class="question"
+      placeholder="Example: What is 25 × 12? Explain step by step..."
+    ></textarea>
+
+    <button class="mainBtn" onclick="solveQuestion()">
+      ✨ Solve with StudyAI
+    </button>
+
+  </div>
+
+  <div id="answer" class="answer">
+    <h3>💡 Explanation</h3>
+    <div id="answerText" class="answerText"></div>
+  </div>
+
+</section>
+
+
+<!-- NOTES -->
+<section id="notes" class="page">
+
+  <div class="pageHeader">
+    <button class="back" onclick="openPage('home')">←</button>
+    <h2>My Notes</h2>
+  </div>
+
+  <div class="noteForm">
+    <input id="noteTitle" class="noteInput" placeholder="Note title">
+    <textarea id="noteBody" class="noteInput" rows="5" placeholder="Write your study note..."></textarea>
+    <button class="mainBtn" onclick="saveNote()">💾 Save Note</button>
+  </div>
+
+  <div class="notesList" id="notesList"></div>
+
+</section>
+
+
+<!-- QUIZ -->
+<section id="quiz" class="page">
+
+  <div class="pageHeader">
+    <button class="back" onclick="openPage('home')">←</button>
+    <h2>Daily Quiz</h2>
+  </div>
+
+  <div class="quizBox">
+
+    <div id="quizQuestion" class="quizQuestion"></div>
+    <div id="options"></div>
+    <div id="score" class="score"></div>
+
+  </div>
+
+</section>
+
+
+<!-- HISTORY -->
+<section id="history" class="page">
+
+  <div class="pageHeader">
+    <button class="back" onclick="openPage('home')">←</button>
+    <h2>Study History</h2>
+  </div>
+
+  <div class="history" id="historyList"></div>
+
+</section>
+
+
+<!-- NAVIGATION -->
+<nav class="bottomNav">
+
+  <button class="navItem active" data-page="home" onclick="openPage('home')">
+    <div>⌂</div>
+    Home
+  </button>
+
+  <button class="navItem" data-page="solver" onclick="openPage('solver')">
+    <div>🤖</div>
+    AI Solver
+  </button>
+
+  <button class="navItem" data-page="notes" onclick="openPage('notes')">
+    <div>📝</div>
+    Notes
+  </button>
+
+  <button class="navItem" data-page="quiz" onclick="openPage('quiz')">
+    <div>🧠</div>
+    Quiz
+  </button>
+
+  <button class="navItem" data-page="history" onclick="openPage('history')">
+    <div>🕘</div>
+    History
+  </button>
+
+</nav>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+
+<script>
+
+/* PAGE SYSTEM */
+
+function openPage(page){
+
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.remove("active");
+  });
+
+  const target=document.getElementById(page);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+  document.querySelectorAll(".navItem").forEach(n=>{
+    n.classList.toggle(
+      "active",
+      n.dataset.page===page
+    );
+  });
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+  if(page==="notes") loadNotes();
+  if(page==="history") loadHistory();
+  if(page==="quiz") startQuiz();
+}
+
+
+/* TOAST */
+
+function showToast(message){
+
+  const toast=document.getElementById("toast");
+
+  toast.textContent=message;
+  toast.classList.add("show");
+
+  setTimeout(()=>{
+    toast.classList.remove("show");
+  },2200);
+}
+
+
+/* DARK MODE */
+
+function toggleTheme(){
+
+  document.body.classList.toggle("dark");
+
+  const dark=document.body.classList.contains("dark");
+
+  localStorage.setItem("studyai_dark",dark);
+
+  document.querySelector(".themeBtn").textContent=
+    dark ? "☀️" : "🌙";
+}
+
+if(localStorage.getItem("studyai_dark")==="true"){
+  document.body.classList.add("dark");
+  document.querySelector(".themeBtn").textContent="☀️";
+}
+
+
+/* SUBJECT SEARCH */
+
+function searchSubjects(){
+
+  const value=
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase();
+
+  document.querySelectorAll(".subject").forEach(item=>{
+
+    const name=item.dataset.name.toLowerCase();
+
+    item.style.display=
+      name.includes(value) ? "flex" : "none";
+
+  });
+}
+
+
+/* SUBJECT OPEN */
+
+function subjectSolve(subject){
+
+  openPage("solver");
+
+  document.getElementById("subjectSelect").value=subject;
+
+  document.getElementById("question").focus();
+}
+
+
+/* HOMEWORK SOLVER */
+
+function solveQuestion(){
+
+  const question=
+    document.getElementById("question").value.trim();
+
+  const subject=
+    document.getElementById("subjectSelect").value;
+
+  const answer=
+    document.getElementById("answer");
+
+  const answerText=
+    document.getElementById("answerText");
+
+  if(!question){
+
+    showToast("Please enter your question");
+
+    document.getElementById("question").focus();
+
+    return;
+  }
+
+  answer.classList.add("show");
+
+  answerText.textContent="Thinking...";
+
+  setTimeout(()=>{
+
+    const result=generateAnswer(question,subject);
+
+    answerText.textContent=result;
+
+    saveHistory(question,subject,result);
+
+  },700);
+}
+
+
+/*
+  DEMO LOCAL SOLVER
+  This works without an API.
+*/
+
+function generateAnswer(q,subject){
+
+  const lower=q.toLowerCase();
+
+  /* Basic arithmetic */
+
+  const arithmetic=
+    lower.match(
+      /^\s*(\d+(?:\.\d+)?)\s*([+\-*x×÷\/])\s*(\d+(?:\.\d+)?)\s*\??\s*$/
+    );
+
+  if(arithmetic){
+
+    const a=parseFloat(arithmetic[1]);
+    const op=arithmetic[2];
+    const b=parseFloat(arithmetic[3]);
+
+    let result;
+
+    if(op==="+") result=a+b;
+    else if(op==="-") result=a-b;
+    else if(op==="*" || op==="x" || op==="×") result=a*b;
+    else if(op==="/" || op==="÷"){
+      if(b===0) return "Division by zero is not defined.";
+      result=a/b;
+    }
+
+    return `Question: ${q}
+
+Step 1:
+Identify the two numbers: ${a} and ${b}.
+
+Step 2:
+Apply the ${operatorName(op)} operation.
+
+Step 3:
+${a} ${op} ${b} = ${result}
+
+Final Answer:
+${result}
+
+This is a step-by-step solution generated locally by StudyAI.`;
+  }
+
+
+  if(
+    lower.includes("capital of india") ||
+    lower.includes("bharat ki rajdhani")
+  ){
+
+    return `Question: ${q}
+
+Answer:
+भारत की राजधानी नई दिल्ली है.
+
+Explanation:
+नई दिल्ली भारत की राष्ट्रीय राजधानी है और केंद्र सरकार के प्रमुख संस्थानों का मुख्य स्थान है.`;
+  }
+
+
+  if(
+    lower.includes("photosynthesis") ||
+    lower.includes("प्रकाश संश्लेषण")
+  ){
+
+    return `Photosynthesis यानी प्रकाश संश्लेषण वह प्रक्रिया है जिसमें हरे पौधे सूर्य के प्रकाश की सहायता से कार्बन डाइऑक्साइड और पानी से अपना भोजन बनाते हैं.
+
+सरल रूप में:
+
+Carbon dioxide + Water + Sunlight
+→ Glucose + Oxygen
+
+इस प्रक्रिया में chlorophyll महत्वपूर्ण भूमिका निभाता है.`;
+  }
+
+
+  if(
+    lower.includes("water") &&
+    (lower.includes("boil") || lower.includes("boiling"))
+  ){
+
+    return `पानी सामान्य वायुमंडलीय दबाव पर लगभग 100°C पर उबलता है.
+
+ध्यान दें:
+ऊंचाई और वायुमंडलीय दबाव बदलने पर boiling point भी बदल सकता है.`;
+  }
+
+
+  if(
+    lower.includes("hello") ||
+    lower.includes("hi")
+  ){
+
+    return `Hello! 👋
+
+मैं StudyAI हूँ.
+
+आप मुझसे Mathematics, Science, English, History और सामान्य पढ़ाई से जुड़े सवाल पूछ सकते हैं.`;
+  }
+
+
+  return `आपका सवाल मिला:
+
+"${q}"
+
+Subject: ${subject}
+
+इस offline version में basic questions और कुछ common study topics का local solver उपलब्ध है.
+
+AI की पूरी क्षमता के लिए इस app में किसी वास्तविक AI API/backend को connect करना होगा.
+
+आप उदाहरण के लिए ये सवाल पूछ सकते हैं:
+
+• 25 × 12
+• 100 / 4
+• What is photosynthesis?
+• What is the capital of India?
+• Water boiling point क्या है?
+
+मैं सवाल को step-by-step समझाने के लिए तैयार हूँ.`;
+}
+
+
+function operatorName(op){
+
+  if(op==="+") return "addition";
+  if(op==="-") return "subtraction";
+  if(op==="*" || op==="x" || op==="×") return "multiplication";
+  if(op==="/" || op==="÷") return "division";
+
+  return "mathematical";
+}
+
+
+/* NOTES */
+
+function saveNote(){
+
+  const title=
+    document.getElementById("noteTitle").value.trim();
+
+  const body=
+    document.getElementById("noteBody").value.trim();
+
+  if(!title || !body){
+
+    showToast("Title और note दोनों भरें");
+
+    return;
+  }
+
+  const notes=
+    JSON.parse(
+      localStorage.getItem("studyai_notes") || "[]"
+    );
+
+  notes.unshift({
+    title:title,
+    body:body,
+    date:new Date().toLocaleString()
+  });
+
+  localStorage.setItem(
+    "studyai_notes",
+    JSON.stringify(notes)
+  );
+
+  document.getElementById("noteTitle").value="";
+  document.getElementById("noteBody").value="";
+
+  loadNotes();
+
+  showToast("Note saved successfully");
+}
+
+
+function loadNotes(){
+
+  const list=
+    document.getElementById("notesList");
+
+  const notes=
+    JSON.parse(
+      localStorage.getItem("studyai_notes") || "[]"
+    );
+
+  if(!notes.length){
+
+    list.innerHTML=
+      `<div class="empty">📝<br><br>No notes yet.<br>Create your first study note.</div>`;
+
+    return;
+  }
+
+  list.innerHTML=notes.map((note,index)=>`
+
+    <div class="note">
+
+      <div class="noteTitle">
+        ${escapeHTML(note.title)}
+      </div>
+
+      <div style="font-size:13px;line-height:1.5">
+        ${escapeHTML(note.body)}
+      </div>
+
+      <div class="noteDate">
+        ${escapeHTML(note.date)}
+      </div>
+
+      <button
+        onclick="deleteNote(${index})"
+        style="margin-top:10px;color:#e74c3c;background:none;font-size:11px">
+        Delete
+      </button>
+
+    </div>
+
+  `).join("");
+}
+
+
+function deleteNote(index){
+
+  const notes=
+    JSON.parse(
+      localStorage.getItem("studyai_notes") || "[]"
+    );
+
+  notes.splice(index,1);
+
+  localStorage.setItem(
+    "studyai_notes",
+    JSON.stringify(notes)
+  );
+
+  loadNotes();
+
+  showToast("Note deleted");
+}
+
+
+/* HISTORY */
+
+function saveHistory(question,subject,answer){
+
+  const history=
+    JSON.parse(
+      localStorage.getItem("studyai_history") || "[]"
+    );
+
+  history.unshift({
+    question,
+    subject,
+    answer,
+    date:new Date().toLocaleString()
+  });
+
+  localStorage.setItem(
+    "studyai_history",
+    JSON.stringify(history.slice(0,30))
+  );
+}
+
+
+function loadHistory(){
+
+  const list=
+    document.getElementById("historyList");
+
+  const history=
+    JSON.parse(
+      localStorage.getItem("studyai_history") || "[]"
+    );
+
+  if(!history.length){
+
+    list.innerHTML=
+      `<div class="empty">🕘<br><br>No study history yet.</div>`;
+
+    return;
+  }
+
+  list.innerHTML=history.map(item=>`
+
+    <div class="historyItem">
+
+      <b>${escapeHTML(item.subject)}</b>
+
+      <p>${escapeHTML(item.question)}</p>
+
+      <small style="color:#999">
+        ${escapeHTML(item.date)}
+      </small>
+
+    </div>
+
+  `).join("");
+}
+
+
+/* QUIZ */
+
+const quizData=[
+
+  {
+    q:"What is 12 × 5?",
+    options:["50","60","70","55"],
+    answer:1
+  },
+
+  {
+    q:"भारत की राजधानी क्या है?",
+    options:["Mumbai","Kolkata","New Delhi","Chennai"],
+    answer:2
+  },
+
+  {
+    q:"Plants prepare food by which process?",
+    options:["Respiration","Photosynthesis","Digestion","Evaporation"],
+    answer:1
+  },
+
+  {
+    q:"How many days are there in a week?",
+    options:["5","6","7","8"],
+    answer:2
+  }
+
+];
+
+let currentQuiz=0;
+let quizScore=0;
+let quizAnswered=false;
+
+function startQuiz(){
+
+  currentQuiz=0;
+  quizScore=0;
+  quizAnswered=false;
+
+  showQuizQuestion();
+}
+
+
+function showQuizQuestion(){
+
+  if(currentQuiz>=quizData.length){
+
+    document.getElementById("quizQuestion").textContent=
+      "🎉 Quiz Completed!";
+
+    document.getElementById("options").innerHTML="";
+
+    document.getElementById("score").textContent=
+      `Your Score: ${quizScore}/${quizData.length}`;
+
+    return;
+  }
+
+  const q=quizData[currentQuiz];
+
+  document.getElementById("quizQuestion").textContent=
+    `${currentQuiz+1}. ${q.q}`;
+
+  document.getElementById("score").textContent="";
+
+  quizAnswered=false;
+
+  document.getElementById("options").innerHTML=
+    q.options.map((option,index)=>`
+
+      <button
+        class="option"
+        onclick="answerQuiz(${index})">
+        ${escapeHTML(option)}
+      </button>
+
+    `).join("");
+}
+
+
+function answerQuiz(index){
+
+  if(quizAnswered) return;
+
+  quizAnswered=true;
+
+  const q=quizData[currentQuiz];
+
+  const buttons=
+    document.querySelectorAll(".option");
+
+  buttons.forEach((btn,i)=>{
+
+    if(i===q.answer){
+      btn.classList.add("correct");
+    }
+
+    if(i===index && index!==q.answer){
+      btn.classList.add("wrong");
+    }
+
+  });
+
+  if(index===q.answer){
+
+    quizScore++;
+
+    showToast("Correct! 🎉");
+
+  }else{
+
+    showToast("Try again next time!");
+
+  }
+
+  setTimeout(()=>{
+
+    currentQuiz++;
+
+    showQuizQuestion();
+
+  },900);
+}
+
+
+/* SECURITY */
+
+function escapeHTML(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+
+/* INITIAL */
+
+loadNotes();
+
+</script>
+
+</body>
+</html>
